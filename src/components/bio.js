@@ -1,6 +1,5 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import Image from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
 
@@ -44,7 +43,16 @@ function Bio() {
                   target="blank"
                   rel="noopener noreferrer"
                 >
-                  I'm on Twitter.
+                  Say hi on Twitter.
+                </a>
+              </span>
+              <span>
+                <a
+                  href={`https://github.com/filipBan`}
+                  target="blank"
+                  rel="noopener noreferrer"
+                >
+                  I'm on Github.
                 </a>
               </span>
             </div>

@@ -1,6 +1,7 @@
 ---
 title: useMemo, useCallback and React.memo
 date: "2019-04-27T21:12:37.121Z"
+description: ""
 ---
 
 Today I finally grokked the distinction between those 3, this is so that I don't forget:
