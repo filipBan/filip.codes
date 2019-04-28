@@ -5,8 +5,9 @@ module.exports = {
     description: `A personal blog to document a learning journey.`,
     siteUrl: `https://filip.codes`,
     social: {
-      twitter: `filipbcodes`,
+      twitter: `filip_codes`,
       github: `https://github.com/filipBan`,
+      codesandbox: `https://codesandbox.io/u/filipBan`,
     },
   },
   plugins: [
