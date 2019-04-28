@@ -26,11 +26,11 @@ const Color = React.memo(({ color }) => (
 
 Every time parent of `Color` component re-renders React will check if the `color` prop has changed. If the object is the same then `Color` will not be re-rendered.
 
-It's important to note that React does not do a deep comparison here, it will only check if it's the same entity (object, array, primitive value) that would pass the `==` or `===` comparison. This is an easy gotcha if the `color` prop gets recalculated in the parent component on every render. `useMemo` can help with that.
+It's important to note that React does not do a deep comparison here. It will only check if it's the same entity (object, array, function) or a primitive value that in both cases would pass the `==` or `===` comparison. This is an easy gotcha if the `color` prop gets recalculated in the parent component on every render. `useMemo` can help with that.
 
 ### useMemo
 
-This hook is used to memoize a computation and return a cached result if none of the dependencies changed. It accepts 2 arguments - a function that will return a result of the computation and an array of dependencies. If any item in that array changes useMemo will re-run the function from the first argument and cache the new result.
+This hook is used to memoize a computation and return a cached result if none of the dependencies changed. It accepts 2 arguments - a function that will return a result of the computation and an array of dependencies. If any item in that array changes in next render useMemo will re-run the function from the first argument and cache the new result.
 
 One use case is a filtered list of items:
 
@@ -65,7 +65,7 @@ function List({ data }) {
 
 `filteredData` will only get recalculated if either of the props passed to the array of dependencies change. If it wasn't wrapped in `useMemo` that filtering would have to happen on every render.
 
-In the above example we can even go one step further an memoize the result of mapping over the `filteredData`:
+In the above example we can even go one step further and memoize the result of mapping over the `filteredData`:
 
 ```jsx{12,19}
 import React, { useMemo, useState } from "react"
@@ -139,7 +139,7 @@ const reducer = (state, action) => {
 
 Then the returned state would be a brand new entity that would fail the `==` and `===` comparison, causing the whole `value` variable to be recalculated.
 
-Important thing here is that `useMemo` will NOT prevent `ChildComponent` above from re-rendering! It will only prevent the value prop that's passed down to be recalculated on every render. Use `React.memo` for that optimization. `useMemo` can however be used as a one-off `React.memo` like so:
+Important thing here is that `useMemo` will NOT prevent `ChildComponent` above from re-rendering! It will only prevent the `value` prop that's passed down from being recalculated on every render. Use `React.memo` for that optimization. `useMemo` can however be used as a one-off `React.memo` like so:
 
 ```jsx
 import React, { useMemo, useState } from "react"
@@ -182,7 +182,7 @@ function Parent() {
 }
 ```
 
-Solution is to use the `useCallback` hook that will 'remember' one function and return that cached entity on every render as long as none of dependencies change:
+Solution is to use the `useCallback` hook that will 'remember' one function and return that cached entity on every render, as long as none of dependencies change:
 
 ```jsx{10}
 import React, { useCallback } from "react"
