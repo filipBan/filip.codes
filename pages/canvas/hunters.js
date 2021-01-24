@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
-import Canvas, {
-    resizeCanvasToDisplaySize,
-} from "../../components/common/Canvas";
-import { init, addNewRandomParticle } from "../../components/hunters/init";
-import { checkCollisions } from "../../components/hunters/helpers";
-import ControlPanel from "../../components/hunters/ControlPanel";
-import useState from "../../components/hunters/state";
+import Canvas, { resizeCanvasToDisplaySize } from "@components/common/Canvas";
+import { init, addNewRandomParticle } from "@components/hunters/init";
+import { checkCollisions } from "@components/hunters/helpers";
+import ControlPanel from "@components/hunters/ControlPanel";
+import useState from "@components/hunters/state";
 
-import styles from "../../components/hunters/hunters.module.css";
+import styles from "@components/hunters/hunters.module.css";
 
 export default function Hunters() {
     const particleArray = useRef([]);
