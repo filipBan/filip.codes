@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
-import Canvas from "../../components/common/Canvas";
+import Canvas, {
+    resizeCanvasToDisplaySize,
+} from "../../components/common/Canvas";
 import { init, addNewRandomParticle } from "../../components/hunters/init";
 import { checkCollisions } from "../../components/hunters/helpers";
 import ControlPanel from "../../components/hunters/ControlPanel";
@@ -16,11 +18,12 @@ export default function Hunters() {
     }, []);
 
     const drawCallback = useCallback((ctx, canvas) => {
+        resizeCanvasToDisplaySize(canvas);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-        particleArray.current.forEach((particle) => {
-            particle.update(ctx, canvas);
-        });
+        particleArray.current.forEach((particle) =>
+            particle.update(ctx, canvas)
+        );
 
         if (particleArray.current.length === 1) {
             particleArray.current = init(state);

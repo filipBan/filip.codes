@@ -27,12 +27,25 @@ export default class Particle {
     }
 
     update(ctx, canvas) {
-        if (this.x >= canvas.width || this.x <= 0) {
+        if (this.x + this.size >= canvas.width || this.x - this.size <= 0) {
             this.directionX *= -1;
         }
 
-        if (this.y >= canvas.height || this.y <= 0) {
+        if (this.y + this.size >= canvas.height || this.y - this.size <= 0) {
             this.directionY *= -1;
+        }
+
+        if (this.x + this.size > canvas.width) {
+            this.x = canvas.width - this.size + 1;
+        }
+        if (this.x - this.size < 0) {
+            this.x = this.size + 1;
+        }
+        if (this.y + this.size > canvas.height) {
+            this.y = canvas.height - this.size + 1;
+        }
+        if (this.y - this.size < 0) {
+            this.y = this.size + 1;
         }
 
         const angle = Math.atan2(this.directionY, this.directionX);
@@ -49,5 +62,6 @@ export default class Particle {
         this.x += this.directionX * this.speed;
         this.y += this.directionY * this.speed;
         this.draw(ctx);
+        return false;
     }
 }

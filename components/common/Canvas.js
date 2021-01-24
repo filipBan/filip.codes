@@ -19,6 +19,7 @@ export const useCanvas = (draw) => {
             draw(context, canvas);
             animationFrameId = window.requestAnimationFrame(render);
         };
+
         render();
         return () => {
             window.cancelAnimationFrame(animationFrameId);
@@ -26,3 +27,12 @@ export const useCanvas = (draw) => {
     }, [draw]);
     return canvasRef;
 };
+
+export function resizeCanvasToDisplaySize(canvas) {
+    const { width, height } = canvas.getBoundingClientRect();
+
+    if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+    }
+}
