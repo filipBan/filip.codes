@@ -5,18 +5,18 @@ import styles from "./hunters.module.css";
 export default function Slider({ title, setter, container, data }) {
     const isSliding = useRef(false);
 
-    function onMouseMove(e) {
+    function slide(e) {
         if (isSliding.current) {
             e.preventDefault();
             adjustSlider(e);
         }
     }
 
-    function onMouseUp() {
+    function stopSliding() {
         isSliding.current = false;
     }
 
-    function onMouseDown(e) {
+    function startSliding(e) {
         isSliding.current = true;
         e.preventDefault();
         adjustSlider(e);
@@ -31,19 +31,27 @@ export default function Slider({ title, setter, container, data }) {
     }
 
     useEffect(() => {
-        window.addEventListener("mousemove", onMouseMove);
-        window.addEventListener("mouseup", onMouseUp);
+        window.addEventListener("mousemove", slide);
+        window.addEventListener("mouseup", stopSliding);
+        window.addEventListener("touchmove", slide);
+        window.addEventListener("touchend", stopSliding);
 
         return () => {
-            window.removeEventListener("mousemove", onMouseMove);
-            window.removeEventListener("mouseup", onMouseUp);
+            window.removeEventListener("mousemove", slide);
+            window.removeEventListener("mouseup", stopSliding);
+            window.removeEventListener("touchmove", slide);
+            window.removeEventListener("touchend", stopSliding);
         };
     }, []);
 
     return (
         <div>
             <span>{title}</span>
-            <div onMouseDown={onMouseDown} className={styles.slider}>
+            <div
+                onMouseDown={startSliding}
+                onTouchStart={startSliding}
+                className={styles.slider}
+            >
                 <div
                     className={styles.sliderRow}
                     style={{ width: `${data.width}%` }}
